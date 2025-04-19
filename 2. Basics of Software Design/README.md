@@ -35,6 +35,41 @@
       - [🧠 Summary Table](#-summary-table-1)
   - [🎯 Summary Table](#-summary-table-2)
   - [❓ Interview Questions (with sample answers)](#-interview-questions-with-sample-answers)
+  - [🎯 2.3 Goals of Software Design](#-23-goals-of-software-design)
+    - [🧠 Key Goals of Software Design](#-key-goals-of-software-design)
+    - [🏗️ Design Hierarchy of Needs](#️-design-hierarchy-of-needs)
+    - [⚠️ Why Design is Often Ignored](#️-why-design-is-often-ignored)
+    - [📌 Summary Table](#-summary-table-3)
+    - [💬 Author's Analogy](#-authors-analogy)
+  - [--](#--)
+  - [⚠️ 2.4 Symptoms of Bad Design](#️-24-symptoms-of-bad-design)
+    - [🧩 Common Symptoms](#-common-symptoms)
+      - [🔗 High Coupling](#-high-coupling)
+      - [🧱 Lack of Modularity](#-lack-of-modularity)
+      - [❌ Never-Touch-Running-Code Syndrome](#-never-touch-running-code-syndrome)
+      - [🔄 Small Change → Big Impact](#-small-change--big-impact)
+      - [📋 Reuse via Copy-Paste](#-reuse-via-copy-paste)
+      - [♻️ Cyclic Dependencies](#️-cyclic-dependencies)
+    - [🛠️ Root Causes of Bad Design](#️-root-causes-of-bad-design)
+    - [📌 Summary Table](#-summary-table-4)
+    - [🗣️ Author's Insight](#️-authors-insight)
+    - [✅ Takeaway](#-takeaway)
+  - [✅ 2.5 Criteria for Good Design](#-25-criteria-for-good-design)
+    - [🎯 Primary Goals](#-primary-goals)
+      - [1. ✅ Correctness](#1--correctness)
+      - [2. 📖 Comprehensibility](#2--comprehensibility)
+      - [3. ✨ Simplicity](#3--simplicity)
+      - [4. 🔄 Flexibility \& Adaptability](#4--flexibility--adaptability)
+      - [5. 🧩 Modularity](#5--modularity)
+      - [6. ♻️ Reusability](#6-️-reusability)
+      - [7. 🔧 Customizability](#7--customizability)
+      - [8. 🔗 Dependency Management](#8--dependency-management)
+      - [9. 📈 Scalability](#9--scalability)
+      - [10. 🛡️ Resilience](#10-️-resilience)
+    - [🧠 Fractal Nature of Good Design](#-fractal-nature-of-good-design)
+    - [📌 Summary Table](#-summary-table-5)
+    - [🗣️ Author’s Advice](#️-authors-advice)
+    - [🧪 Takeaway](#-takeaway-1)
   
 
 
@@ -1097,3 +1132,241 @@ public class DrawingTool {
 ---
 
 Mastering these OOD principles is crucial for writing maintainable and scalable Java applications.
+
+---
+---
+
+## 🎯 2.3 Goals of Software Design
+
+Software design is not directly visible like functionality, but it is **fundamental to building reliable, maintainable, and adaptable software**. Well-designed software is not only about "working code" — it's about **writing code that continues to work over time**, as requirements evolve.
+
+---
+
+### 🧠 Key Goals of Software Design
+
+A software design is considered **good** when it achieves the following goals:
+
+- ✅ **Manages Complexity**: Breaks down large systems into manageable, modular pieces.
+- ✅ **Defines Small Interfaces**: Keeps class and module interfaces minimal and focused.
+- ✅ **Promotes Decoupling**: Minimizes dependencies between components.
+- ✅ **Assigns Clear Responsibilities**: Ensures each module or class has a specific job.
+- ✅ **Enhances Maintainability**: Code should be easy to understand, refactor, and extend.
+- ✅ **Supports Changeability**: Allows for easy adaptation as new requirements arise.
+- ✅ **Improves Stability**: Changes in one part of the code should not break others.
+- ✅ **Facilitates Quick Bug Fixes**: Isolates issues and enables rapid resolution.
+- ✅ **Enables Reusability**: Modules can be reused across multiple projects or contexts.
+- ✅ **Boosts Code Comprehensibility**: Code is clean, consistent, and self-explanatory.
+
+---
+
+### 🏗️ Design Hierarchy of Needs
+
+![image](resources/images/Design-hierarchy-of-needs.png)
+
+The chapter references a **"Design Hierarchy of Needs"** (similar to Maslow’s hierarchy), suggesting that just like human needs, **higher-level design benefits can only be achieved if the foundations are solid**.
+
+Design should not be an afterthought — it's the *foundation* of everything else. The author warns that neglecting proper design early in a project is like trying to **build a house without a solid foundation** — eventually, it will collapse.
+
+---
+
+### ⚠️ Why Design is Often Ignored
+
+Some common reasons why teams neglect proper software design:
+
+- Lack of technical experience
+- Tight deadlines or budget constraints
+- Misunderstanding its long-term value
+- Focus solely on functionality instead of maintainability
+
+The author emphasizes that this is a **fatal mistake** — design **must be prioritized early**.
+
+---
+
+### 📌 Summary Table
+
+| Goal                   | Description                                               |
+| ---------------------- | --------------------------------------------------------- |
+| Manage Complexity      | Break down large problems into smaller, solvable ones     |
+| Small Interfaces       | Focused, minimal access points to modules or classes      |
+| Low Coupling           | Reduce interdependency between modules                    |
+| Clear Responsibilities | Each class/module should do one thing well                |
+| Maintainability        | Easy to understand and refactor                           |
+| Changeability          | Code adapts easily to new requirements                    |
+| Stability              | Changes don't break unrelated parts                       |
+| Reusability            | Code can be reused across applications                    |
+| Comprehensibility      | Readable, consistent, and clean code                      |
+| Quick Bug Fixes        | Easier to locate and resolve issues due to good structure |
+
+---
+
+### 💬 Author's Analogy
+
+> *"Software design is like building a house: you need a solid foundation. Starting without it is a fatal mistake."*  
+> — Martin Hock
+
+---
+
+Let me know if you'd like this section saved to a `.md` file or if you want to move on to section **2.4 Symptoms of Bad Design**.
+
+--
+--
+
+## ⚠️ 2.4 Symptoms of Bad Design
+
+Even if software meets all its functional requirements, poor design can introduce long-term issues. This section highlights the most common **symptoms** of bad software design — warning signs that suggest technical debt, maintainability problems, or architectural flaws.
+
+---
+
+### 🧩 Common Symptoms
+
+#### 🔗 High Coupling
+- Components are overly dependent on one another.
+- Changes in one module often lead to ripple effects in others.
+- Increases fragility and reduces flexibility.
+
+#### 🧱 Lack of Modularity
+- System is not broken into independent, reusable modules.
+- New features or bug fixes are harder to implement without affecting unrelated code.
+- The system becomes more brittle as it grows.
+
+#### ❌ Never-Touch-Running-Code Syndrome
+- Developers avoid modifying old code due to fear of breaking functionality.
+- Workarounds accumulate around legacy logic.
+- Leads to unpredictable side effects and hidden bugs.
+
+#### 🔄 Small Change → Big Impact
+- A minor change in business requirements forces massive refactoring.
+- Indicates poor separation of concerns or tight coupling.
+
+#### 📋 Reuse via Copy-Paste
+- Code is duplicated instead of reused via abstraction.
+- Errors must be fixed in multiple locations.
+- Difficult to trace all occurrences and inconsistencies.
+
+#### ♻️ Cyclic Dependencies
+- Modules depend on each other in a loop.
+- Such artifacts are hard to test in isolation.
+- They often play multiple roles, making them hard to understand and replace.
+
+---
+
+### 🛠️ Root Causes of Bad Design
+
+- ❌ Lack of problem understanding  
+- ❌ Poor foresight in anticipating future requirements  
+- ❌ Limited or missing communication within the team  
+- ❌ Rushed development cycles with no design planning  
+
+---
+
+### 📌 Summary Table
+
+| Symptom                           | Impact                                         |
+| --------------------------------- | ---------------------------------------------- |
+| High Coupling                     | Fragile code, difficult to maintain            |
+| Low Modularity                    | Hard to isolate and evolve parts of the system |
+| Never-Touch-Running-Code Syndrome | Accumulated workarounds, fear of change        |
+| Small Changes → Big Effects       | Low adaptability, costly maintenance           |
+| Copy-Paste Reuse                  | Code duplication, error-prone                  |
+| Cyclic Dependencies               | Complex testing, confusing responsibilities    |
+
+---
+
+### 🗣️ Author's Insight
+
+> “Bad design often creeps in silently — through short-term fixes, rushed decisions, or fear-driven coding. Recognizing the symptoms early is crucial for preventing long-term damage.”  
+> — *Martin Hock, Clean Code Fundamentals*
+
+---
+
+### ✅ Takeaway
+
+If your codebase shows **any** of the above symptoms, it's time to refactor. Clean design isn't just about elegance — it's about **sustainability**, **scalability**, and **developer sanity**.
+
+---
+---
+
+## ✅ 2.5 Criteria for Good Design
+
+Good software design goes beyond functionality. It ensures the system is **robust, scalable, maintainable**, and **adaptable** over time. This section outlines the key characteristics that define a **well-designed** software architecture.
+
+---
+
+### 🎯 Primary Goals
+
+To create a sustainable software design, the following **criteria must be satisfied**:
+
+#### 1. ✅ Correctness
+- Meets all **functional** and **non-functional** requirements.
+- Produces correct results under all expected conditions.
+
+#### 2. 📖 Comprehensibility
+- Code should be **self-explanatory** and **well-documented**.
+- Easy for new developers to understand and contribute to the codebase.
+
+#### 3. ✨ Simplicity
+- Avoids unnecessary complexity.
+- Strives for clarity and straightforward logic.
+- Easy to read, reason about, and debug.
+
+#### 4. 🔄 Flexibility & Adaptability
+- Easily adapts to **changing requirements** with minimal refactoring.
+- New features can be added without breaking existing functionality.
+
+#### 5. 🧩 Modularity
+- Encourages **high cohesion** (related functions grouped together).
+- Reduces coupling between modules, enhancing isolation and independence.
+
+#### 6. ♻️ Reusability
+- Components are designed to be reused across different projects or contexts.
+
+#### 7. 🔧 Customizability
+- Supports easy configuration and extension to fit different user needs.
+
+#### 8. 🔗 Dependency Management
+- Avoids **cyclic dependencies** between modules.
+- Promotes maintainable and loosely coupled architecture.
+
+#### 9. 📈 Scalability
+- Can handle increased workloads (e.g., more users, data, requests) without performance degradation.
+
+#### 10. 🛡️ Resilience
+- Capable of recovering gracefully from failures or unexpected conditions.
+
+---
+
+### 🧠 Fractal Nature of Good Design
+
+> These criteria apply at **all levels of design**:  
+> from the **overall system architecture**, to **modules**, to **individual classes and methods**.
+
+---
+
+### 📌 Summary Table
+
+| Criterion         | Description                                                  |
+| ----------------- | ------------------------------------------------------------ |
+| Correctness       | Meets all specified functional & non-functional requirements |
+| Comprehensibility | Easy to read, learn, and work with                           |
+| Simplicity        | Minimal and efficient design                                 |
+| Flexibility       | Can be changed or extended without rework                    |
+| Modularity        | High cohesion, low coupling                                  |
+| Reusability       | Designed with general applicability in mind                  |
+| Customizability   | Supports user-specific configuration or extension            |
+| Dependency Mgmt   | Avoids cycles, supports clean separation of concerns         |
+| Scalability       | Handles growth and higher loads                              |
+| Resilience        | Gracefully recovers from failures                            |
+
+---
+
+### 🗣️ Author’s Advice
+
+> “As your application grows, your architecture must grow with it. A good design is one that evolves **gracefully**, not one that collapses under its own weight.”  
+> — *Martin Hock, Clean Code Fundamentals*
+
+---
+
+### 🧪 Takeaway
+
+Design is a **long-term investment**. Meeting only short-term goals (like deadlines) at the expense of good design will always result in higher **technical debt** and **maintenance cost** down the road.
+
