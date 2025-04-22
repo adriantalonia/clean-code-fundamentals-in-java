@@ -41,7 +41,6 @@
     - [⚠️ Why Design is Often Ignored](#️-why-design-is-often-ignored)
     - [📌 Summary Table](#-summary-table-3)
     - [💬 Author's Analogy](#-authors-analogy)
-  - [--](#--)
   - [⚠️ 2.4 Symptoms of Bad Design](#️-24-symptoms-of-bad-design)
     - [🧩 Common Symptoms](#-common-symptoms)
       - [🔗 High Coupling](#-high-coupling)
@@ -70,6 +69,17 @@
     - [📌 Summary Table](#-summary-table-5)
     - [🗣️ Author’s Advice](#️-authors-advice)
     - [🧪 Takeaway](#-takeaway-1)
+  - [🔒 2.6 Information Hiding](#-26-information-hiding)
+    - [🧠 Definition](#-definition)
+    - [🎯 Purpose](#-purpose)
+    - [🔧 Access Modifiers in Java](#-access-modifiers-in-java)
+    - [📜 Visibility Rules (Java Language Specification)](#-visibility-rules-java-language-specification)
+    - [💡 Java Example](#-java-example)
+    - [🏛️ Design Recommendation](#️-design-recommendation)
+    - [⚠️ Avoid Overexposure via Interfaces](#️-avoid-overexposure-via-interfaces)
+    - [📦 Modularity and Access Levels](#-modularity-and-access-levels)
+    - [🧠 Summary](#-summary)
+    - [🗣️ Quote from the Author](#️-quote-from-the-author)
   
 
 
@@ -1208,8 +1218,8 @@ The author emphasizes that this is a **fatal mistake** — design **must be prio
 
 Let me know if you'd like this section saved to a `.md` file or if you want to move on to section **2.4 Symptoms of Bad Design**.
 
---
---
+---
+---
 
 ## ⚠️ 2.4 Symptoms of Bad Design
 
@@ -1370,3 +1380,103 @@ To create a sustainable software design, the following **criteria must be satisf
 
 Design is a **long-term investment**. Meeting only short-term goals (like deadlines) at the expense of good design will always result in higher **technical debt** and **maintenance cost** down the road.
 
+---
+---
+
+## 🔒 2.6 Information Hiding
+
+### 🧠 Definition
+
+**Information Hiding** is a design principle that emphasizes concealing internal details of classes and modules from external access. It encourages exposing only what is necessary for external interaction, keeping the rest private.
+
+This concept aligns closely with **Encapsulation**, where classes limit access to internal data and methods by using access modifiers (`public`, `private`, `protected`, and default/package-private).
+
+
+### 🎯 Purpose
+
+- 🔐 Prevent external code from relying on internal implementation details.
+- 🧱 Increase modularity and ease of maintenance.
+- 🔄 Enable flexible changes to internals without affecting users of the class.
+- ⚠️ Minimize accidental misuse or bugs due to improper access.
+
+
+
+### 🔧 Access Modifiers in Java
+
+| Modifier    | Access Level                                                         |
+| ----------- | -------------------------------------------------------------------- |
+| `public`    | Accessible from any class, in any package.                           |
+| `protected` | Accessible within the same package and subclasses in other packages. |
+| *default*   | (No modifier) Accessible only within the same package.               |
+| `private`   | Accessible only within the declaring class.                          |
+
+---
+
+### 📜 Visibility Rules (Java Language Specification)
+
+- **`public`**: Used when the element is intended for wide use, especially in public APIs.
+- **`protected`**: Used when subclass access is required, even outside the current package.
+- **`default`** (package-private): Keeps elements visible within the same package only.
+- **`private`**: Keeps members accessible only within their own class.
+
+---
+
+### 💡 Java Example
+
+```java
+public class User {
+    private String password; // Hidden from external access
+
+    public void setPassword(String newPassword) {
+        if (newPassword.length() >= 8) {
+            this.password = newPassword;
+        }
+    }
+
+    public boolean verifyPassword(String input) {
+        return this.password.equals(input);
+    }
+}
+```
+
+**Explanation:**
+
+- password is a private field — not directly accessible.
+
+- Access is managed through safe methods (setPassword() and verifyPassword()).
+
+### 🏛️ Design Recommendation
+> "Declare class members as private and offer controlled access through public methods."
+
+This limits accidental dependencies and misuse. External systems should only interact with the public interface.
+
+### ⚠️ Avoid Overexposure via Interfaces
+Interfaces are always public.
+
+Avoid using interfaces to expose mutable state.
+
+If exposure is necessary, provide read-only (immutable) views or copies.
+
+.
+
+### 📦 Modularity and Access Levels
+Package structure impacts information hiding:
+
+- If a class needs to be used only inside a package, declare it package-private (no modifier).
+
+- Public classes should have well-defined responsibilities and minimal exposed surface.
+
+### 🧠 Summary
+
+| Aspect               | Best Practice                                                 |
+| -------------------- | ------------------------------------------------------------- |
+| Internal Members     | Keep private                                                  |
+| Inter-package Access | Use protected or default                                      |
+| External Interface   | Expose minimal and safe API through public                    |
+| Mutable State        | Avoid exposing directly, provide copies or immutable wrappers |
+| API Design           | Hide implementation details, only expose essential operations |
+
+### 🗣️ Quote from the Author
+
+> “Simplify and reduce access to a class by hiding details, methods, and members that shouldn’t be called and accessed by a client.”
+— Martin Hock, Clean Code Fundamentals​
