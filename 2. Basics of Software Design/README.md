@@ -80,6 +80,51 @@
     - [📦 Modularity and Access Levels](#-modularity-and-access-levels)
     - [🧠 Summary](#-summary)
     - [🗣️ Quote from the Author](#️-quote-from-the-author)
+  - [🔗 2.7 Cohesion](#-27-cohesion)
+    - [🧠 Definition](#-definition-1)
+    - [🎯 Why Cohesion Matters](#-why-cohesion-matters)
+    - [🔍 Low Cohesion Example](#-low-cohesion-example)
+    - [✅ High Cohesion Example](#-high-cohesion-example)
+    - [🧩 Degrees of Cohesion](#-degrees-of-cohesion)
+    - [📌 Summary Table](#-summary-table-6)
+    - [🗣️ Final Insight](#️-final-insight)
+  - [🔗 2.8 Coupling](#-28-coupling)
+    - [🧠 Definition](#-definition-2)
+    - [🎯 Purpose of Reducing Coupling](#-purpose-of-reducing-coupling)
+    - [❗ Consequences of High Coupling](#-consequences-of-high-coupling)
+    - [🔍 Types of Coupling](#-types-of-coupling)
+    - [🧠 Key Design Recommendation](#-key-design-recommendation)
+    - [🛠️ Coupling Reduction Strategies](#️-coupling-reduction-strategies)
+    - [🔁 Relationship to Cohesion](#-relationship-to-cohesion)
+    - [📌 Summary Table](#-summary-table-7)
+    - [🗣️ Final Insight](#️-final-insight-1)
+  - [🔄 2.9 Cohesion - Coupling](#-29-cohesion---coupling)
+    - [🧠 Overview](#-overview)
+    - [📐 Definitions](#-definitions)
+    - [🎯 Design Guidelines](#-design-guidelines)
+    - [⚠️ Important Insight](#️-important-insight)
+    - [📌 Summary Table](#-summary-table-8)
+    - [🗣️ Final Thought](#️-final-thought)
+  - [🧱 2.10 Big Ball of Mud](#-210-big-ball-of-mud)
+    - [🧠 Definition](#-definition-3)
+    - [❗ Characteristics](#-characteristics)
+    - [🔍 Symptoms](#-symptoms)
+    - [📉 Common Causes](#-common-causes)
+    - [🛑 Risks of a Big Ball of Mud](#-risks-of-a-big-ball-of-mud)
+    - [💡 Prevention and Refactoring Tips](#-prevention-and-refactoring-tips)
+    - [📌 Summary](#-summary-1)
+    - [📚 Reference](#-reference)
+    - [🗣️ Final Thought](#️-final-thought-1)
+  - [🏛️ 2.11 Architecture Principles](#️-211-architecture-principles)
+    - [🧠 1. KISS – *Keep It Simple, Stupid*](#-1-kiss--keep-it-simple-stupid)
+    - [🔮 2. YAGNI – *You Aren’t Gonna Need It*](#-2-yagni--you-arent-gonna-need-it)
+    - [😲 3. POLA – *Principle of Least Astonishment*](#-3-pola--principle-of-least-astonishment)
+    - [🧩 4. SoC – *Separation of Concerns*](#-4-soc--separation-of-concerns)
+    - [💥 5. If It Hurts, Do It More Often](#-5-if-it-hurts-do-it-more-often)
+    - [🚸 6. Boy Scout Rule – *Leave the Code Better Than You Found It*](#-6-boy-scout-rule--leave-the-code-better-than-you-found-it)
+    - [🗣️ 7. Talk to People](#️-7-talk-to-people)
+    - [📌 Summary Table](#-summary-table-9)
+    - [🗣️ Final Insight](#️-final-insight-2)
   
 
 
@@ -1453,9 +1498,8 @@ This limits accidental dependencies and misuse. External systems should only int
 ### ⚠️ Avoid Overexposure via Interfaces
 Interfaces are always public.
 
-Avoid using interfaces to expose mutable state.
-
-If exposure is necessary, provide read-only (immutable) views or copies.
+- Avoid using interfaces to expose mutable state.
+- If exposure is necessary, provide read-only (immutable) views or copies.
 
 .
 
@@ -1480,3 +1524,408 @@ Package structure impacts information hiding:
 
 > “Simplify and reduce access to a class by hiding details, methods, and members that shouldn’t be called and accessed by a client.”
 — Martin Hock, Clean Code Fundamentals​
+
+---
+---
+
+## 🔗 2.7 Cohesion
+
+### 🧠 Definition
+
+**Cohesion** is a measure of how strongly related and focused the responsibilities of a single module or class are.  
+A highly cohesive module performs a single well-defined task, and all its elements contribute to that task.
+
+> “High cohesion improves code **comprehension**, **maintenance**, and **adaptability**.”  
+> — *Martin Hock, Clean Code Fundamentals*
+
+---
+
+### 🎯 Why Cohesion Matters
+
+- 📚 **Easier to Understand**: Cohesive components are simpler to read and reason about.
+- 🧪 **Better for Testing**: High cohesion results in self-contained units that are easier to test.
+- 🔧 **Easier to Maintain**: Changes affect fewer components and are less error-prone.
+- 🔁 **Encourages Reusability**: Focused components are easier to repurpose in different contexts.
+- 📦 **Improves Modularity**: Promotes clean separation of concerns.
+
+---
+
+### 🔍 Low Cohesion Example
+
+If a class handles unrelated tasks, such as processing payments and managing user login, it suffers from **low cohesion**.  
+This makes it harder to test, understand, and reuse.
+
+---
+
+### ✅ High Cohesion Example
+
+A class that strictly manages invoice generation and all its related logic (e.g., formatting, printing, emailing) is **highly cohesive**.
+
+---
+
+### 🧩 Degrees of Cohesion
+
+Cohesion can be categorized from **strongest** to **weakest**:
+
+| Cohesion Type     | Description                                                                     |
+| ----------------- | ------------------------------------------------------------------------------- |
+| 🔝 Functional      | All parts of the component work together to achieve a single well-defined task. |
+| 🔁 Sequential      | Output from one part is input to another within the component.                  |
+| 🔗 Communicational | Elements use or manipulate the same data or resources.                          |
+| 🧭 Procedural      | Elements follow a specific sequence of execution.                               |
+| ⏰ Temporal        | Elements are grouped because they execute at the same time (e.g., startup).     |
+| 🔣 Logical         | Elements perform similar functions but are controlled by flags or switches.     |
+| 💥 Coincidental    | No meaningful relationship — grouped arbitrarily.                               |
+
+> **Best practice:** Aim for **functional** or **sequential** cohesion. Avoid **logical** and **coincidental** cohesion.
+
+---
+
+### 📌 Summary Table
+
+| Cohesion Level        | Characteristics                             | Impact                                |
+| --------------------- | ------------------------------------------- | ------------------------------------- |
+| High Cohesion         | Single, focused responsibility              | Easy to understand, change, test      |
+| Low Cohesion          | Unrelated responsibilities grouped together | Complex, error-prone, harder to reuse |
+| Functional Cohesion   | Most desirable                              | Strong maintainability and clarity    |
+| Coincidental Cohesion | Worst case                                  | Disorganized, hard to manage          |
+
+---
+
+### 🗣️ Final Insight
+
+> "Easy-to-maintain code usually has **high cohesion**. The code for a module is all together and works together."  
+> — *Clean Code Fundamentals*
+
+Keep all related logic in one place and remove unrelated responsibilities to strengthen cohesion across your codebase.
+
+---
+---
+
+## 🔗 2.8 Coupling
+
+### 🧠 Definition
+
+**Coupling** refers to the degree of **interdependence between software modules**. It describes how much one component relies on another and how tightly they are connected.
+
+> "Low coupling facilitates **maintainability** and makes the system more **stable**."  
+> — *Martin Hock, Clean Code Fundamentals*
+
+---
+
+### 🎯 Purpose of Reducing Coupling
+
+- 💡 Make modules easier to **understand** and **test**.
+- 🔄 Enable internal changes in one module **without breaking others**.
+- 🔁 Improve **reusability** by designing self-contained components.
+- 🧩 Encourage **independent development** and **clean architecture**.
+
+---
+
+### ❗ Consequences of High Coupling
+
+| Problem                      | Description                                                   |
+| ---------------------------- | ------------------------------------------------------------- |
+| 🔧 Difficult Maintenance      | A change in one part causes ripple effects across the system. |
+| 🧱 Monolithic Structure       | Code is too interdependent to isolate features or components. |
+| 🚫 Hard to Replace Components | Swapping out one part requires major rewrites elsewhere.      |
+| 💥 Fragile Codebase           | The system breaks easily with minor changes.                  |
+| 🔁 Poor Reusability           | Tightly coupled code cannot be reused in different contexts.  |
+
+---
+
+### 🔍 Types of Coupling
+
+| Type                  | Description                                                       |
+| --------------------- | ----------------------------------------------------------------- |
+| 📊 Data Coupling       | Modules share data through parameters.                            |
+| 🔌 Interface Coupling  | Modules communicate through a shared interface.                   |
+| 🏗️ Structural Coupling | Modules are tied by internal structure or implementation details. |
+
+---
+
+### 🧠 Key Design Recommendation
+
+> “Modules should be as **independent as possible** from each other.”
+
+Avoid situations where a module "knows too much" about the internals of others. Instead, rely on **abstractions** (like interfaces) to isolate responsibilities.
+
+---
+
+### 🛠️ Coupling Reduction Strategies
+
+- Use **interfaces** and **dependency injection**.
+- Apply the **Law of Demeter** ("talk to your friends, not to strangers").
+- Avoid long chains of method calls (`obj.getX().getY().doSomething()`).
+- Embrace **composition over inheritance** when it leads to lower coupling.
+
+> 📉 *"Coupling can never be reduced to zero, but should be minimized wherever possible."*
+
+---
+
+### 🔁 Relationship to Cohesion
+
+> "High cohesion **enables** low coupling."  
+> Highly cohesive modules tend to be self-contained and thus require fewer dependencies on other modules.
+
+---
+
+### 📌 Summary Table
+
+| Attribute        | High Coupling                 | Low Coupling                    |
+| ---------------- | ----------------------------- | ------------------------------- |
+| Dependency       | Strong interdependence        | Weak or abstracted dependencies |
+| Impact of change | High — affects many modules   | Low — change is localized       |
+| Testability      | Difficult — many side effects | Easy — isolated behavior        |
+| Reusability      | Poor                          | High                            |
+| Maintainability  | Fragile, error-prone          | Robust, adaptable               |
+
+---
+
+### 🗣️ Final Insight
+
+> “Design your software so that **modules can evolve independently**. High coupling ties your hands; low coupling sets you free.”  
+> — *Clean Code Fundamentals*
+
+---
+---
+
+## 🔄 2.9 Cohesion - Coupling
+
+### 🧠 Overview
+
+**Cohesion** and **Coupling** are two of the most critical concepts in evaluating and improving software design quality.
+
+- **Cohesion**: Measures the **unity** or **relatedness** of elements within a component.
+- **Coupling**: Measures the **interdependence** between components or modules.
+
+Understanding their relationship helps developers **architect systems** that are modular, flexible, and easier to maintain.
+
+---
+
+### 📐 Definitions
+
+| Concept  | Definition                                                                               |
+| -------- | ---------------------------------------------------------------------------------------- |
+| Cohesion | The degree to which a part of a codebase represents a **logically single, atomic unit**. |
+| Coupling | The degree to which a module or unit is **independent** from others.                     |
+
+---
+
+### 🎯 Design Guidelines
+
+The chapter emphasizes these key practices:
+
+- ✅ **Encapsulate information** within components.
+- ✅ Make **modules highly cohesive** — each module should serve a single clear purpose.
+- ✅ Reduce **coupling** — minimize dependencies between modules to enable change and reuse.
+- ✅ Apply these principles at **all levels** of the system: methods, classes, modules, and packages.
+
+---
+
+### ⚠️ Important Insight
+
+> It is **impossible** to achieve complete decoupling without **affecting cohesion**, and vice versa.
+
+High cohesion and low coupling are **complementary**, but **balancing** them is essential:
+- Too much decoupling might lead to **fragmented logic** and reduced cohesion.
+- Too much cohesion with poor separation may lead to **tightly bound systems**.
+
+---
+
+### 📌 Summary Table
+
+| Attribute       | Ideal Goal                          | Benefit                             |
+| --------------- | ----------------------------------- | ----------------------------------- |
+| High Cohesion   | One unit, one responsibility        | Easier to maintain, test, and reuse |
+| Low Coupling    | Minimal dependencies between units  | More modular, flexible system       |
+| Balanced Design | Cohesive yet independent components | Scalable and maintainable software  |
+
+---
+
+### 🗣️ Final Thought
+
+> “Cohesion and coupling should not be treated in isolation. You must strike the right balance to achieve a clean, robust design.”  
+> — *Martin Hock, Clean Code Fundamentals*
+
+---
+---
+
+## 🧱 2.10 Big Ball of Mud
+
+### 🧠 Definition
+
+A **Big Ball of Mud** is a software architecture **anti-pattern** characterized by a **disorganized, chaotic, and unmaintainable codebase**. It typically arises in systems that grow **without clear architectural vision or consistent practices**, where short-term fixes dominate over long-term design strategy.
+
+> “A haphazardly structured, sprawling, sloppy, duct-tape-and-baling-wire, spaghetti-code jungle.”  
+> — *Brian Foote and Joseph Yoder*, Big Ball of Mud
+
+---
+
+### ❗ Characteristics
+
+- ⚠️ No clear architecture or design structure.
+- 🧶 Information is shared indiscriminately — often globally or redundantly.
+- 🛠️ Consists of layers of patches and temporary fixes that become permanent.
+- 🔄 Structure erodes over time until it's unrecognizable.
+- 📉 Changes become increasingly risky and harder to implement.
+
+---
+
+### 🔍 Symptoms
+
+- 📦 Everything is **interconnected**, making isolation difficult.
+- 🧪 Lack of modularity — components can't be reused or tested in isolation.
+- 🏗️ Design decisions are inconsistent or absent.
+- 🕳️ Overuse of global state, static data, or shared mutable objects.
+- 🧱 Classes and functions handle too many responsibilities.
+
+---
+
+### 📉 Common Causes
+
+| Cause                          | Description                                            |
+| ------------------------------ | ------------------------------------------------------ |
+| 😵 Lack of experience           | Developers don’t apply proper design principles        |
+| 🚫 No architectural awareness   | Teams don't value or understand architectural thinking |
+| 🧩 High coupling & low cohesion | Poor component boundaries                              |
+| 🔁 Constant requirement changes | Leads to rushed fixes without design updates           |
+| ⏰ Time pressure                | Quick solutions preferred over clean structure         |
+| 💰 Budget constraints           | Sacrifice design for speed and cost                    |
+| 🔄 High employee turnover       | Inconsistent vision, poor knowledge transfer           |
+
+---
+
+### 🛑 Risks of a Big Ball of Mud
+
+- 💥 Fragile code — one change can break multiple areas.
+- 🐢 Slower development over time.
+- 📉 Poor scalability and performance.
+- 😡 Developer frustration and burnout.
+- 🚫 Hard to onboard new developers.
+
+---
+
+### 💡 Prevention and Refactoring Tips
+
+- 🧱 Establish and follow a clear **software architecture** early.
+- ✂️ Refactor regularly — small improvements matter.
+- ✅ Use modularity, layering, and domain boundaries.
+- 🧪 Write tests — they protect against future erosion.
+- 📖 Follow design principles like SOLID, DRY, and SoC.
+
+---
+
+### 📌 Summary
+
+| Aspect           | Big Ball of Mud            | Clean Architecture                  |
+| ---------------- | -------------------------- | ----------------------------------- |
+| Structure        | Lacking or chaotic         | Modular and well-defined            |
+| Maintainability  | Low                        | High                                |
+| Change Safety    | High risk                  | Localized changes                   |
+| Modularity       | None or minimal            | Strong separation of concerns       |
+| Developer Morale | Low — painful to work with | High — confidence in making changes |
+
+---
+
+### 📚 Reference
+
+> "Big Ball of Mud" pattern by Brian Foote and Joseph Yoder  
+> http://www.laputan.org/mud/mud.html#BigBallOfMud
+
+---
+
+### 🗣️ Final Thought
+
+> “Only those who are unconcerned about architecture, and perhaps comfortable with daily patchwork chores, are content to work on such systems.”
+
+Preventing or refactoring a Big Ball of Mud is one of the **core responsibilities of a professional software engineer**. Don't let entropy take over — design with intention.
+
+---
+---
+
+## 🏛️ 2.11 Architecture Principles
+
+Architecture principles provide foundational guidance to ensure that software systems are **clean**, **maintainable**, and **scalable**. This section introduces several widely accepted principles that support effective architectural decisions.
+
+---
+
+### 🧠 1. KISS – *Keep It Simple, Stupid*
+
+- 👷 Try multiple options, but always implement the **simplest one** first.
+- ❓ Constantly ask: *“Is there an easier way to do this?”*
+- 👤 Think about the next person maintaining your code — assume it will be **you**.
+- 🧹 Eliminate unnecessary complexity or unused features.
+
+---
+
+### 🔮 2. YAGNI – *You Aren’t Gonna Need It*
+
+- 💼 Only implement what is **currently needed**.
+- 🔮 Avoid premature optimization or speculative features.
+- ✅ Base architecture on **actual requirements** discussed with stakeholders.
+
+---
+
+### 😲 3. POLA – *Principle of Least Astonishment*
+
+- 🔄 Keep behavior **predictable and consistent**.
+- 📖 If deviations are necessary, **document why**.
+- 🧠 Inconsistent naming or structure increases **mental overhead** and confusion.
+
+---
+
+### 🧩 4. SoC – *Separation of Concerns*
+
+- 🔃 Group **related logic together**, and **separate unrelated responsibilities**.
+- 🧼 Clear modular boundaries make code easier to manage and evolve.
+- 🧪 Supports better **testability** and reuse.
+
+---
+
+### 💥 5. If It Hurts, Do It More Often
+
+- 🧱 Repetition of difficult or painful tasks makes them easier and builds habit.
+- 🔧 Regularly integrate changes, deploy frequently, or refactor incrementally.
+- 📈 Frequent, smaller actions reduce **overall complexity and risk**.
+
+🔗 Source: [Martin Fowler’s blog on the topic](https://martinfowler.com/bliki/FrequencyReducesDifficulty.html)
+
+---
+
+### 🚸 6. Boy Scout Rule – *Leave the Code Better Than You Found It*
+
+- 🧹 Continuously **clean up** the code.
+- 🚫 Avoid adding new technical debt when modifying existing code.
+- 🧪 Fix “code smells” incrementally during your workflow.
+- 📈 Small, consistent improvements **raise code quality over time**.
+
+---
+
+### 🗣️ 7. Talk to People
+
+- 📚 Not all knowledge is in code or documentation.
+- 🧑‍🤝‍🧑 Communicate with team members and stakeholders.
+- 🔍 Gain clarity by asking questions instead of guessing.
+
+---
+
+### 📌 Summary Table
+
+| Principle              | Description                                                |
+| ---------------------- | ---------------------------------------------------------- |
+| **KISS**               | Prefer simplicity over complexity                          |
+| **YAGNI**              | Don’t build features until they’re needed                  |
+| **POLA**               | Keep behavior consistent to avoid surprises                |
+| **SoC**                | Keep related logic together and separate unrelated logic   |
+| **If It Hurts, Do It** | Increase frequency of difficult tasks to reduce complexity |
+| **Boy Scout Rule**     | Improve the code every time you touch it                   |
+| **Talk to People**     | Get missing context through human communication            |
+
+---
+
+### 🗣️ Final Insight
+
+> “Architecture should be guided by principles, not by guesswork or convenience.  
+> Clean architecture emerges when every decision is **deliberate and value-driven**.”  
+> — *Martin Hock, Clean Code Fundamentals*
