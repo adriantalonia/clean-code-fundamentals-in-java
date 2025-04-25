@@ -132,6 +132,42 @@
     - [📚 Reference to Further Reading](#-reference-to-further-reading)
     - [🎯 Takeaway](#-takeaway-2)
     - [🧠 Summary](#-summary-2)
+- [🏗️ 2.13 Layered Architecture](#️-213-layered-architecture)
+  - [📚 2.13.1 Use of Layered Architecture](#-2131-use-of-layered-architecture)
+    - [🧠 Overview](#-overview-2)
+    - [🧱 Key Concepts](#-key-concepts)
+    - [🧩 Common Layers in a 3-Tier Architecture](#-common-layers-in-a-3-tier-architecture)
+    - [🔁 Layer Interaction Flow](#-layer-interaction-flow)
+    - [⚠️ Layer Violation Warning](#️-layer-violation-warning)
+    - [🧪 Implementation Advice](#-implementation-advice)
+    - [📦 Example: Class Package Structure](#-example-class-package-structure)
+      - [By Technical Tier:](#by-technical-tier)
+    - [✅ Benefits](#-benefits)
+    - [🗣️ Final Thought](#️-final-thought-2)
+  - [🚫 2.13.2 Violated Layered Architecture](#-2132-violated-layered-architecture)
+    - [🔍 Definition](#-definition-4)
+    - [❗ Consequences](#-consequences)
+    - [✅ Recommendation](#-recommendation)
+  - [📏 2.13.3 Horizontal Layering](#-2133-horizontal-layering)
+    - [📦 Structure](#-structure)
+    - [⚠️ Drawbacks](#️-drawbacks)
+  - [📏 2.13.3 Horizontal Layering](#-2133-horizontal-layering-1)
+    - [📦 Structure](#-structure-1)
+    - [⚠️ Drawbacks](#️-drawbacks-1)
+  - [📁 2.13.4 Feature-Based Layering – Single Package](#-2134-feature-based-layering--single-package)
+    - [🧩 Structure](#-structure-2)
+    - [✅ Advantages](#-advantages)
+  - [📂 2.13.5 Feature-Based Layering – Slices before Layers](#-2135-feature-based-layering--slices-before-layers)
+    - [🧩 Structure](#-structure-3)
+    - [❗ Trade-Off](#-trade-off)
+  - [🛡️ 2.13.6 Feature-Based Layering – Hexagonal Architecture](#️-2136-feature-based-layering--hexagonal-architecture)
+    - [💡 Overview](#-overview-3)
+    - [🧩 Structure Example](#-structure-example)
+    - [✅ Benefits](#-benefits-1)
+  - [🧱 2.13.7 The Java Module System](#-2137-the-java-module-system)
+    - [📦 Introduced in Java 9](#-introduced-in-java-9)
+    - [✅ Benefits](#-benefits-2)
+  - [📌 Summary Table](#-summary-table-10)
   
 
 
@@ -2005,3 +2041,246 @@ Topics covered in her work include:
 | Schemata            | Use of consistent, recognizable design patterns |
 
 Designing systems with **cognitive psychology in mind** fosters a cleaner, more resilient architecture — especially useful across evolving teams and long project lifecycles.
+
+---
+---
+
+# 🏗️ 2.13 Layered Architecture  
+## 📚 2.13.1 Use of Layered Architecture
+
+### 🧠 Overview
+
+Layered architecture is a foundational **architectural style** in software engineering. It promotes the separation of concerns by dividing the application into distinct layers, each with a specific responsibility. This approach enables **scalability**, **maintainability**, and **reusability** of the system.
+
+> “Architectures should not be about frameworks. Frameworks are tools, not the foundation.”  
+> — Martin Hock
+
+---
+
+### 🧱 Key Concepts
+
+- A **layered (n-tier) architecture** divides application components into layers based on their responsibilities.
+- It became a **de-facto standard** because of its simplicity and familiarity among developers.
+- Layer count may vary:
+  - Small systems: 3 layers
+  - Large business systems: 5 or more layers
+
+---
+
+### 🧩 Common Layers in a 3-Tier Architecture
+
+| Layer            | Responsibilities                                                          |
+| ---------------- | ------------------------------------------------------------------------- |
+| **Presentation** | Handles user interface (UI), formatting data, and user interaction logic. |
+| **Business**     | Contains business logic, rules, and coordination of operations.           |
+| **Persistence**  | Manages direct data access and storage, abstracts database interactions.  |
+
+---
+
+### 🔁 Layer Interaction Flow
+
+- Each layer interacts only with the **layer directly below** it.
+- **Data transfer** between layers is usually handled by **domain objects**.
+- This flow **reduces coupling** and improves encapsulation.
+
+---
+
+### ⚠️ Layer Violation Warning
+
+> No layer should directly access non-adjacent layers  
+> (e.g., Presentation → Persistence is **not** allowed).
+
+---
+
+### 🧪 Implementation Advice
+
+- **Business logic must not leak** into the Presentation layer.
+- Avoid mixing concerns between layers to ensure **clean modularity**.
+- Design each layer with a **clear, stable API**.
+
+---
+
+### 📦 Example: Class Package Structure
+
+You can organize classes in two ways:
+
+#### By Technical Tier:
+```java
+com.swsc.web
+com.swsc.service
+com.swsc.repository
+```
+**By Feature (recommended in larger systems):**
+```java
+com.swsc.ticket
+com.swsc.registration
+```
+
+### ✅ Benefits
+- Separation of concerns — Each layer handles one clear responsibility.
+- Improved testing and debugging — Logic is modular and isolated.
+- Better reusability — Services and data access logic can be reused across projects.
+
+### 🗣️ Final Thought
+> “Use layering as a structure, not as a constraint. Adapt your architecture to your use case, but understand why layering has been so successful historically.”
+
+---
+---
+
+## 🚫 2.13.2 Violated Layered Architecture
+
+### 🔍 Definition
+When requests **skip layers** or a **lower layer accesses a higher one**, it **violates the architecture**.
+
+### ❗ Consequences
+- Undermines structure and maintainability
+- Introduces hidden dependencies
+- Makes testing and separation of concerns harder
+
+### ✅ Recommendation
+Establish clear architectural rules and **automate enforcement** via tests or tools.
+
+---
+
+## 📏 2.13.3 Horizontal Layering
+
+### 📦 Structure
+Divides application into **technical layers**:
+- `com.swcs.web` → Controllers
+- `com.swcs.service` → Services
+- `com.swcs.repository` → Repositories
+
+### ⚠️ Drawbacks
+- Promotes **monoliths**
+- Leads to **high coupling**
+- Violates **information hiding** (forces everything to be `public`)
+
+---
+
+## 📏 2.13.3 Horizontal Layering
+
+### 📦 Structure
+Divides application into **technical layers**:
+- `com.swcs.web` → Controllers
+- `com.swcs.service` → Services
+- `com.swcs.repository` → Repositories
+
+### ⚠️ Drawbacks
+- Promotes **monoliths**
+- Leads to **high coupling**
+- Violates **information hiding** (forces everything to be `public`)
+
+---
+
+## 📁 2.13.4 Feature-Based Layering – Single Package
+
+### 🧩 Structure
+Group classes by **functional domain**, e.g.:
+- `com.swcs.ticket ` 
+  - `TicketController` 
+  - `TicketService` 
+  - `TicketRepository` 
+- `com.swcs.reservation ` 
+  - `ReservationController` 
+  - `ReservationService` 
+  - `ReservationRepository` 
+
+### ✅ Advantages
+- **Low coupling, high cohesion**
+- Domain-focused clarity
+- Improved testability
+- Classes can be package-private (better encapsulation)
+
+---
+
+## 📂 2.13.5 Feature-Based Layering – Slices before Layers
+
+### 🧩 Structure
+Within a feature slice, split by technical concern:
+```
+ 1 com.swcs.ticket.web
+ 2     (C) TicketController
+ 3 com.swcs.ticket.service
+ 4     (C) TicketService
+ 5 com.swcs.ticket.repository
+ 6     (C) TicketRepository
+ 7 
+ 8 com.swcs.reservation.web
+ 9     (C) ReservationController
+10 com.swcs.reservation.service
+11     (C) ReservationService
+12 com.swcs.reservation.repository
+13     (C) ReservationRepository
+```
+
+### ❗ Trade-Off
+- Better **organization**
+- But forces **public visibility** to allow cross-layer access
+
+---
+
+## 🛡️ 2.13.6 Feature-Based Layering – Hexagonal Architecture
+
+### 💡 Overview
+Also known as **Port and Adapter Architecture**.
+
+- Domain logic is **central**
+- User (UI/API) and server-side (DB) interactions are **outside**
+- Core is **independent of frameworks and tools**
+
+### 🧩 Structure Example
+
+```
+ 1 com.swcs.ticket.web
+ 2     (C) TicketController
+ 3 com.swcs.ticket.service
+ 4     (C) TicketService
+ 5     (I) TicketRepository
+ 6 com.swcs.ticket.repository
+ 7     (C) TicketJdbcRepository
+ 8 
+ 9 com.swcs.reservation.web
+10     (C) ReservationController
+11 com.swcs.reservation.service
+12     (C) ReservationService
+13     (I) ReservationRepository
+14 com.swcs.reservation.repository
+15     (C) ReservationJdbcRepository
+```
+
+### ✅ Benefits
+- Enforces **dependency inversion**
+- Clear separation of **domain and infrastructure**
+- Encourages **testable, modular** code
+
+---
+
+## 🧱 2.13.7 The Java Module System
+
+### 📦 Introduced in Java 9
+
+Adds **modularization** capabilities:
+
+- Packages are grouped into **modules**
+- Modules must **explicitly export** packages
+- Consumers must **declare dependencies** using `requires`
+
+### ✅ Benefits
+- Strong **encapsulation**
+- Better **visibility control**
+- **Improves design clarity**
+
+> *"You don’t need a modular system to design for modularity, but a modular system makes this much easier."*
+
+---
+
+## 📌 Summary Table
+
+| Approach                             | Visibility        | Cohesion | Coupling | Modularity | Scalability |
+| ------------------------------------ | ----------------- | -------- | -------- | ---------- | ----------- |
+| Violated Layered Architecture        | Too open          | Low      | High     | Poor       | Poor        |
+| Horizontal Layering                  | Global `public`   | Low      | High     | Weak       | Poor        |
+| Feature-Based - Single Package       | Package-private   | High     | Low      | Strong     | Good        |
+| Feature-Based - Slices before Layers | Public for cross  | Medium   | Medium   | Moderate   | Good        |
+| Hexagonal Architecture               | Interface-driven  | High     | Low      | Strong     | Excellent   |
+| Java Module System                   | Module boundaries | High     | Low      | Strong     | Excellent   |
