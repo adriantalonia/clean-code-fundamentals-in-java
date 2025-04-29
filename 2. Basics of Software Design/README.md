@@ -168,6 +168,11 @@
     - [📦 Introduced in Java 9](#-introduced-in-java-9)
     - [✅ Benefits](#-benefits-2)
   - [📌 Summary Table](#-summary-table-10)
+- [📢 2.14 Screaming Architecture](#-214-screaming-architecture)
+  - [🧠 Overview](#-overview-4)
+  - [📢 What Should Architecture "Scream"?](#-what-should-architecture-scream)
+  - [🧩 How to Achieve Screaming Architecture](#-how-to-achieve-screaming-architecture)
+  - [📦 Example: Feature-Oriented Structure](#-example-feature-oriented-structure)
   
 
 
@@ -2284,3 +2289,80 @@ Adds **modularization** capabilities:
 | Feature-Based - Slices before Layers | Public for cross  | Medium   | Medium   | Moderate   | Good        |
 | Hexagonal Architecture               | Interface-driven  | High     | Low      | Strong     | Excellent   |
 | Java Module System                   | Module boundaries | High     | Low      | Strong     | Excellent   |
+
+---
+---
+
+# 📢 2.14 Screaming Architecture
+
+## 🧠 Overview
+
+**Screaming Architecture** is a concept introduced by Uncle Bob (Robert C. Martin) that emphasizes the importance of creating a **software structure** where the **architecture clearly reflects its purpose** at first glance — it "screams" what the system is about.
+
+In a well-designed system, developers should be able to immediately **understand the system’s domain and its primary responsibilities** just by looking at its organization.
+
+---
+
+## 📢 What Should Architecture "Scream"?
+
+- **Business domain**: Not frameworks, libraries, or technical layers.
+- **Feature-based structure**: Clear mapping of packages and modules to business functionality.
+- **Low coupling and high cohesion**: Logical groupings that reflect real-world domains.
+
+> *If you open the project structure and you see "web", "service", "repository" — you see technology.  
+> If you open it and see "orders", "payments", "invoices" — you see the domain.*  
+> — Uncle Bob, Screaming Architecture
+
+---
+
+## 🧩 How to Achieve Screaming Architecture
+
+- **Package by feature**, not by technical role.
+- **Single responsibility principle** at the package/module level.
+- Combine **vertical and horizontal slicing**:
+  - Vertical: Feature-driven
+  - Horizontal: Technical concern separation (controller, service, repository) inside the feature
+
+---
+
+## 📦 Example: Feature-Oriented Structure
+
+```text
+com.swcs.ticket
+ ├── TicketController.java
+ ├── TicketService.java
+ └── TicketRepository.java
+
+com.swcs.reservation
+ ├── ReservationController.java
+ ├── ReservationService.java
+ └── ReservationRepository.java
+```
+
+Instead of:
+```text
+com.swcs.web
+com.swcs.service
+com.swcs.repository
+
+```
+
+✅ Result: Feature modules are isolated, understandable, and modular.
+
+🎯 Benefits
+
+| Benefit                | Description                                          |
+| ---------------------- | ---------------------------------------------------- |
+| 🔎 Clear focus          | Instantly reveals the purpose of each package/module |
+| 🧱 High modularity      | Each feature evolves independently                   |
+| 🔄 Easier maintenance   | Easier to find, change, and test features            |
+| 🚀 Supports scalability | Facilitates transition toward microservices          |
+| 👨‍💻 Improved onboarding  | New developers understand the system faster          |
+
+**📌 Final Insight**
+"An architecture that screams 'React' or 'Spring Boot' is a sign of misplaced priorities.
+Your architecture should scream the business it supports, not the technology it uses."
+
+Design your system to express its domain model clearly and make its architecture obvious and self-explanatory.
+
+
