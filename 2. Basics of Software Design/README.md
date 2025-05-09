@@ -173,6 +173,22 @@
   - [📢 What Should Architecture "Scream"?](#-what-should-architecture-scream)
   - [🧩 How to Achieve Screaming Architecture](#-how-to-achieve-screaming-architecture)
   - [📦 Example: Feature-Oriented Structure](#-example-feature-oriented-structure)
+- [🧪 2.15 Testing the Architecture and Design](#-215-testing-the-architecture-and-design)
+  - [🧠 Overview](#-overview-5)
+  - [🎯 Why Test the Architecture?](#-why-test-the-architecture)
+  - [🔧 Tools for Architectural Testing](#-tools-for-architectural-testing)
+  - [📌 What to Test](#-what-to-test)
+  - [✅ Best Practices](#-best-practices)
+  - [🗣️ Final Thought](#️-final-thought-3)
+- [⚙️ 2.16 Software Engineering Values](#️-216-software-engineering-values)
+  - [🧠 Overview](#-overview-6)
+  - [✅ Key Values](#-key-values)
+    - [🧪 Testability](#-testability)
+    - [🛠️ Maintainability](#️-maintainability)
+    - [🧩 Consistency](#-consistency)
+    - [🧱 Modularity](#-modularity)
+    - [🧼 Simplicity](#-simplicity)
+  - [📌 Summary Table](#-summary-table-11)
   
 
 
@@ -2365,4 +2381,137 @@ Your architecture should scream the business it supports, not the technology it 
 
 Design your system to express its domain model clearly and make its architecture obvious and self-explanatory.
 
+---
+---
+
+# 🧪 2.15 Testing the Architecture and Design
+
+## 🧠 Overview
+
+Architectural decisions are often made **early in the project lifecycle**, but over time, the architecture may drift from the original plan. Developers may not follow architectural guidelines consistently—especially if they're documented in a wiki, a PDF, or a confluence page nobody updates.
+
+This architectural erosion increases **technical debt** and introduces inconsistencies, making systems harder to maintain and evolve.
+
+---
+
+## 🎯 Why Test the Architecture?
+
+- Ensure adherence to the intended structure.
+- Prevent violations of **layering**, **modularity**, or **access rules**.
+- Enable **early detection** of problems.
+- Support **automated validation** of architectural constraints.
+
+---
+
+## 🔧 Tools for Architectural Testing
+
+| Tool              | Description                                                                 |
+|-------------------|-----------------------------------------------------------------------------|
+| **IntelliJ IDEA** | Has a built-in dependency matrix to analyze architecture.                   |
+| **Eclipse Plugins** | Includes tools like eDepend, STAN, jDepend, and Java Dependency Viewer.    |
+| **ArchUnit**      | Java testing library to define and validate architectural rules via code.   |
+| **jQAssistant**   | QA tool that uses Neo4j to validate project-specific structural rules.      |
+| **Structure101**  | Visualize, refactor, and control large codebases.                           |
+| **Sonargraph**    | Enforces static architecture and metric rules in development pipelines.     |
+| **Lattix**        | Visual representation and remediation of architecture via dependency matrix.|
+| **Teamscale**     | Monitors and improves code quality and architectural conformance.           |
+
+---
+
+## 📌 What to Test
+
+- **Dependency direction**: Prevent reverse dependencies.
+- **Layer integrity**: Enforce layer access rules.
+- **Cyclic dependencies**: Eliminate circular references.
+- **Visibility rules**: Ensure encapsulation and information hiding.
+
+---
+
+## ✅ Best Practices
+
+- **Integrate architectural validation into CI/CD pipelines.**
+- **Use ArchUnit or jQAssistant for automated rules.**
+- **Visualize** the system regularly with dependency graphs.
+- Keep architecture rules **up to date and enforceable**.
+
+---
+
+## 🗣️ Final Thought
+
+> "An architecture that exists only in documentation is not an architecture.  
+> A living, testable architecture is a true foundation of a clean codebase."
+
+Test your architecture **just like any other part of the code** — regularly, automatically, and with discipline.
+
+---
+---
+
+# ⚙️ 2.16 Software Engineering Values
+
+## 🧠 Overview
+
+Software engineering values are guiding principles that ensure software is:
+- Correct
+- Maintainable
+- Simple
+- Modular
+- Consistent
+
+These values are **not tied to tools or technologies**, but instead guide **how software is designed and evolved over time**. Adopting them helps development teams deliver long-lasting and high-quality systems.
+
+---
+
+## ✅ Key Values
+
+### 🧪 Testability
+- Every component of the system must be **verifiable** through testing.
+- Functional correctness must be **proven through automated tests**.
+- No system is "done" unless it has been **automatically validated**.
+
+---
+
+### 🛠️ Maintainability
+- Systems are built to **last**, not just to work.
+- Maintenance often falls to people who were **not original authors**.
+- Systems must be **understandable** with **minimal context**.
+
+---
+
+### 🧩 Consistency
+- Reduce variation in:
+  - Patterns
+  - Libraries
+  - Integration styles
+- Fewer solutions for the same problem = **easier maintenance**.
+- A single solution is better than multiple inconsistent ones.
+
+---
+
+### 🧱 Modularity
+- Software systems evolve constantly.
+- **Isolate changes** by dividing code into **coherent, independent units**.
+- Modularity applies at **every level**: functions, classes, packages, and components.
+
+---
+
+### 🧼 Simplicity
+- The **simplest solution** that fulfills the requirements is best.
+- The easiest code to change is the code that **doesn’t exist**.
+- Prioritize **minimalist design** that respects the other values.
+
+---
+
+## 📌 Summary Table
+
+| Value          | Description                                                                 |
+|----------------|-----------------------------------------------------------------------------|
+| Testability     | System must be verifiable by automated tests                               |
+| Maintainability | Easy to understand and adapt, even by new developers                       |
+| Consistency     | Use uniform approaches to recurring problems                               |
+| Modularity      | Divide responsibilities into independent units to contain change           |
+| Simplicity      | Avoid over-engineering; favor clean and minimalist solutions               |
+
+---
+
+> *"Values are the backbone of software craftsmanship. When embedded in your team culture, they shape systems that stand the test of time."*
 
