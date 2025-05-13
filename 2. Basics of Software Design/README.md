@@ -189,6 +189,15 @@
     - [🧱 Modularity](#-modularity)
     - [🧼 Simplicity](#-simplicity)
   - [📌 Summary Table](#-summary-table-11)
+- [👥 2.17 Team Charter](#-217-team-charter)
+  - [🧠 Overview](#-overview-7)
+  - [✍️ What Is a Team Charter?](#️-what-is-a-team-charter)
+  - [🔁 Why Use a Team Charter?](#-why-use-a-team-charter)
+  - [📘 Example: Charter Statement](#-example-charter-statement)
+    - [🔹 Team-Facing Practices](#-team-facing-practices)
+    - [🔹 Technical Practices](#-technical-practices)
+  - [✅ Best Practices for Creating a Team Charter](#-best-practices-for-creating-a-team-charter)
+  - [🗣️ Final Insight](#️-final-insight-3)
   
 
 
@@ -2515,3 +2524,87 @@ These values are **not tied to tools or technologies**, but instead guide **how 
 
 > *"Values are the backbone of software craftsmanship. When embedded in your team culture, they shape systems that stand the test of time."*
 
+---
+---
+
+# 👥 2.17 Team Charter
+
+## 🧠 Overview
+
+A **Team Charter** is a foundational document that aligns a team on its **vision**, **mission**, and **boundaries**. It acts as a **source of clarity**, not just within the team but also to stakeholders across the organization.
+
+When done right, it:
+- Promotes a shared understanding of expectations
+- Reduces ambiguity in priorities
+- Strengthens team cohesion and culture
+
+---
+
+## ✍️ What Is a Team Charter?
+
+A document created *by the team, for the team*, which:
+
+- Defines **how the team works**
+- Sets the **expectations and responsibilities**
+- Clarifies **behavioral norms** and **technical practices**
+
+---
+
+## 🔁 Why Use a Team Charter?
+
+- 📣 Communicates direction and focus clearly
+- ✅ Prevents conflicts from misaligned expectations
+- 💬 Provides a reference in case of contradictory tasks or scope changes
+- 🤝 Builds team alignment and shared ownership
+
+---
+
+## 📘 Example: Charter Statement
+
+### 🔹 Team-Facing Practices
+
+We want to:
+
+- Create an **open, no-blame, learning, and feedback** culture
+- Foster **teamwork and innovation**
+- Promote **collective ownership** — eliminate knowledge silos
+- **Develop everyone’s abilities** to the fullest
+- Encourage **effective communication**
+- Provide and act on **honest feedback**
+- Collaborate with **pair programming** at high quality
+- Operate as a **unified delivery team**
+- Act as **professional software craftsmen**
+
+---
+
+### 🔹 Technical Practices
+
+We aim to:
+
+- Keep things **simple**
+- Promote **continual improvement** via refactoring
+- **Close feedback loops** with CI/CD
+- Ensure **everyone helps fix the build** immediately
+- Monitor **CI/CD pipelines and SonarQube**
+- Maintain products **free of technical debt**
+- Follow **standards and best practices**
+- Enforce **Definition of Done (DoD)** and code review checklists
+
+---
+
+## ✅ Best Practices for Creating a Team Charter
+
+| Step                            | Description                                                  |
+|---------------------------------|--------------------------------------------------------------|
+| Co-creation                     | Created collaboratively with **all team members**            |
+| Specific & actionable           | Uses **clear, measurable behaviors**, not vague statements   |
+| Regularly reviewed              | **Updated as needed** to reflect team evolution              |
+| Integrated into team culture    | Referenced in onboarding, retrospectives, and reviews        |
+
+---
+
+## 🗣️ Final Insight
+
+> *“A Team Charter isn’t a rulebook. It’s a living document that captures who you are as a team and how you succeed together.”*
+
+Let it **guide decision-making, support feedback**, and help your team grow in alignment.
